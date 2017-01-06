@@ -225,4 +225,8 @@ public class Graph {
 	public void setNumOfLocks(int numOfLocks) {
 		this.numOfLocks = numOfLocks;
 	}
+
+	public int getNumberOfKeys() {
+		return numberOfKeys;
+	}
 }

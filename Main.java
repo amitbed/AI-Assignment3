@@ -17,15 +17,26 @@ public class Main {
 			System.out.println("Graph initialization failed");
 			return;
 		}
-		buildBayesNetwork();
+		buildBayesNetwork(graph);
 		//Simulator simulator = new Simulator(graph, 2); // 2 players
 		
 		Scanner sc = new Scanner(System.in);
 		sc.close();		
 	}
 
-	private static void buildBayesNetwork() {
-
+	private static void buildBayesNetwork(Graph graph) {
+		BayesNetwork bayes= new BayesNetwork();
+		bayes.addBRCNode();
+		for (int i=0; i < graph.getNumberOfNodes()+1; i++){
+			Node n = graph.getNode(i);
+			if (n != null) {
+				for (int key : n.getKeys()) {
+					bayes.addResourceNode(i, key);
+					bayes.addBlockageNode(i, key);
+				}
+			}
+		}
+		bayes.addEdges();
 	}
 
 	private static Graph initializeGraphFromFile(String fileName) {

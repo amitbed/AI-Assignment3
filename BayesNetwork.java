@@ -12,4 +12,11 @@ public class BayesNetwork {
     public BayesNetwork(){
         nodes = new Vector<BayesNode>();
     }
+
+    public void addBRCNode() {
+    }
+
+    public void addResourceNode(int nodeId, int key) {
+        new Res
+    }
 }

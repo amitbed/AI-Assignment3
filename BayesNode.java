@@ -3,26 +3,17 @@ import java.util.Map;
 /**
  * Created by Amit on 06/01/2017.
  */
-public class BayesNode {
-    private int nodeId;
-    private int resourceId;
-    private int type; // {BRC, Resource, Blockage}
-    private Map<String, Double> probs;
+public abstract class BayesNode {
+    public static int BRC = 0;
+    public static int RESOURCE = 0;
+    public static int BLOCKAGE = 0;
 
-    public BayesNode(){}
+    protected int type; // {BRC, Resource, Blockage}
+    protected Map<String, Double> probs;
 
-    public double findProbability(boolean brc, boolean key){
-        StringBuffer keyRep = null;
-        if (brc){
-            keyRep.append("T");
-        }else{
-            keyRep.append("F");
-        }
-        if (key){
-            keyRep.append("T");
-        }else{
-            keyRep.append("F");
-        }
-        return probs.get(keyRep);
+    public BayesNode(int type){
+        this.type = type;
     }
+
+
 }
