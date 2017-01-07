@@ -221,12 +221,16 @@ public class Graph {
 	public void setPBRC(double pbrc) {
 		this.pbrc = pbrc;
 	}
+	public double getPBRC() {
+		return this.pbrc;
+	}
 
 	public void setNumOfLocks(int numOfLocks) {
 		this.numOfLocks = numOfLocks;
 	}
 
-	public int getNumberOfKeys() {
-		return numberOfKeys;
+	public int getNumOfLocks() {
+		return this.numOfLocks;
 	}
+
 }

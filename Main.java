@@ -25,14 +25,16 @@ public class Main {
 	}
 
 	private static void buildBayesNetwork(Graph graph) {
-		BayesNetwork bayes= new BayesNetwork();
+		BayesNetwork bayes= new BayesNetwork(graph);
 		bayes.addBRCNode();
 		for (int i=0; i < graph.getNumberOfNodes()+1; i++){
 			Node n = graph.getNode(i);
 			if (n != null) {
 				for (int key : n.getKeys()) {
-					bayes.addResourceNode(i, key);
-					bayes.addBlockageNode(i, key);
+					bayes.addResourceNode(i, key, n.getKeyProb(key));
+				}
+				for (int b=1; b <= graph.getNumOfLocks(); b++){
+					bayes.addBlockageNode(i, b);
 				}
 			}
 		}

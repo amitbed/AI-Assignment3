@@ -36,11 +36,16 @@ public class Node {
 		return keyProbs;
 	}
 
+	public double getKeyProb(int key){
+		int index = keys.indexOf(key);
+		return keyProbs.elementAt(index);
+	}
+
 	public List<Integer> getLocks() {
 		return locks;
 	}
 
-	public int getSmallestKey() {
+	/*public int getSmallestKey() {
 		int smallest = keys.get(0);
 		for (int key : keys){
 			if (key < smallest){
@@ -48,5 +53,5 @@ public class Node {
 			}
 		}
 		return smallest;
-	}
+	}*/
 }
