@@ -91,7 +91,7 @@ public class Graph {
 	public void printGraph(){
 		System.out.println("nodes:");
 		for(Node n : nodes){
-			System.out.println("node " + n.getId() + " keys: " + n.getKeys().toString() + " probs: " + n.getKeyProbs().toString() + " locks: " + n.getLocks().toString());
+			System.out.println("node " + n.getId() + " keys: " + n.getKeys().toString() + " cpt: " + n.getKeyProbs().toString() + " locks: " + n.getLocks().toString());
 		}
 	
 		/*System.out.println("edges:");
@@ -110,6 +110,15 @@ public class Graph {
 		}
 		return neighbors;
 	}
+
+	public List<Integer> getNeighborIds(int nodeId){
+		List<Integer> neighbors = new ArrayList<>();
+		for (Edge e : graph.get(nodeId)){
+			neighbors.add(e.getTo());
+		}
+		return neighbors;
+	}
+
 	
 	/*public List<Node> getAvailableNeighbors(Agent agent ,int nodeId){
 		List<Node> neighbors = new ArrayList<>();

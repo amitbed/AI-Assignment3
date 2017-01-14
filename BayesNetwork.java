@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -7,54 +6,31 @@ import java.util.Vector;
  */
 public class BayesNetwork {
 
+    private final double pBRC;
     private List<BayesNode> nodes;
-    //private List<List<Edge>> edges;
-    private List<BayesEdge> edges;
-    private double pbrc;
 
     public BayesNetwork(Graph graph){
         nodes = new Vector<>();
-        edges = new Vector<>();
-      //  edges = new ArrayList<List<Edge>>(n+1);
-        edges.add(null); // first element is empty assuming that the graph contains nodes from 1 - N
-        pbrc = graph.getPBRC();
+        pBRC = graph.getPBRC();
     }
 
     public void addBRCNode() {
-        nodes.add(new BRCNode(pbrc));
+        nodes.add(new ResourceNode(0,0,pBRC)); //BRC is represented as resource number 0
     }
 
     public void addResourceNode(int nodeId, int key, double keyProb) {
         nodes.add(new ResourceNode(nodeId, key, keyProb));
     }
 
-    public void addBlockageNode(int nodeId, int blockageId) {
-        nodes.add(new BlockageNode(nodeId, blockageId));
-    }
-
-    public void addEdges() {
-        for (BayesNode node : nodes) {
-            if (node instanceof BlockageNode) {
-                createEdgeFromResourcesToBlockages(node);
-            } else if (node instanceof BRCNode) {
-                createEdgeToAllBlockageNodes(node);
+    public void addBlockageNode(int nodeId, int blockageId, List<Integer> neighbors) {
+        BlockageNode blockageNode = new BlockageNode(nodeId, blockageId);
+        nodes.add(blockageNode);
+        blockageNode.addParent(0);// BRC node
+        for (int neighbor : neighbors){
+            int bayesNodeId = BayesNode.makeNodeId(neighbor, blockageId);
+            if (nodes.isExistResourceNode(bayesNodeId)){
+                blockageNode.addParent(bayesNodeId);
             }
         }
-    }
-
-    private void createEdgeFromResourcesToBlockages(BayesNode node) {
-
-    }
-
-    private void createEdgeToAllBlockageNodes(BayesNode node) {
-        for (BayesNode bNode: nodes){
-            if (bNode instanceof BlockageNode){
-                addEdge(node, bNode);
-            }
-        }
-    }
-
-    public void addEdge(BayesNode from,BayesNode to){
-        edges.add(new BayesEdge(from, to));
     }
 }

@@ -1,19 +1,33 @@
 import java.util.HashMap;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Created by Amit on 06/01/2017.
  */
 public class BlockageNode extends BayesNode {
-    private int nodeIdInGraph;
-    private int blockageId;
+    private List<Integer> parents;
 
 
     public BlockageNode(int nodeIdInGraph, int blockageId){
-        this.nodeIdInGraph = nodeIdInGraph;
-        this.blockageId = blockageId;
-        probs = new HashMap<>();
+        makeNodeId(nodeIdInGraph, blockageId);
+        parents = new Vector<>();
+        parents.add(0); // BTC represented as 00
+        //add parents
+        cpt = new HashMap<>();
     }
+
+    @Override
+    public String toString() {
+        return ("B" + id);
+    }
+
+    public void addParent(int bayesNodeId) {
+        parents.add(bayesNodeId);
+    }
+
+
+    //--------------------------------MAYBE FOR FUTURE USE----------------------------------------------
 
     /*private void buildProbabilityTable(int numOfNeighborsWithSameResources) {
         StringBuilder key = null;
@@ -35,7 +49,7 @@ public class BlockageNode extends BayesNode {
                     key.append("F");
                 }
             }
-            probs.put(key,getProbability(resCounter, isBRC));
+            cpt.put(key,getProbability(resCounter, isBRC));
             key = null;
             }
         }
@@ -58,11 +72,6 @@ public class BlockageNode extends BayesNode {
         return 0;
     }
 
-    @Override
-    public String toString() {
-        return ("R" + nodeIdInGraph+ "," + blockageId);
-    }
-
     /*public double findProbability(boolean brc, boolean[] resources){
         StringBuffer keyRep = null;
         if (brc){
@@ -77,6 +86,6 @@ public class BlockageNode extends BayesNode {
                 keyRep.append("F");
             }
         }
-        return probs.get(keyRep);
+        return cpt.get(keyRep);
     }*/
 }

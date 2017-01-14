@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.List;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
@@ -27,18 +28,18 @@ public class Main {
 	private static void buildBayesNetwork(Graph graph) {
 		BayesNetwork bayes= new BayesNetwork(graph);
 		bayes.addBRCNode();
-		for (int i=0; i < graph.getNumberOfNodes()+1; i++){
-			Node n = graph.getNode(i);
+		for (int node = 1; node < graph.getNumberOfNodes()+1; node++){
+			Node n = graph.getNode(node);
 			if (n != null) {
 				for (int key : n.getKeys()) {
-					bayes.addResourceNode(i, key, n.getKeyProb(key));
+					bayes.addResourceNode(node, key, n.getKeyProb(key));
 				}
 				for (int b=1; b <= graph.getNumOfLocks(); b++){
-					bayes.addBlockageNode(i, b);
+					List<Integer> neighbors = graph.getNeighborIds(node);
+					bayes.addBlockageNode(node, b, neighbors);
 				}
 			}
 		}
-		bayes.addEdges();
 	}
 
 	private static Graph initializeGraphFromFile(String fileName) {

@@ -5,10 +5,18 @@ import java.util.Map;
  */
 public abstract class BayesNode {
 
-    protected Map<String, Double> probs;
+    protected int id;
+    protected Map<String, Double> cpt;
 
     public BayesNode(){
     }
 
     public abstract String toString();
+
+    public static int makeNodeId(int nodeIdInGraph, int id){
+        StringBuilder idStr = null;
+        idStr.append(nodeIdInGraph);
+        idStr.append(id);
+        return Integer.parseInt(idStr.toString());
+    }
 }
